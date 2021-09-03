@@ -1,0 +1,12 @@
+.Submit_Button {
+  padding: 3px 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.AddPost_Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
