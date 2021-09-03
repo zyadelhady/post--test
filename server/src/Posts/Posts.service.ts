@@ -34,7 +34,8 @@ export class PostsService {
 
   async getPosts() {
     const posts = await this.postModel.find({ isComment: false });
-    return this.populatePosts(posts);
+    await this.populatePosts(posts);
+    return posts;
   }
 
   async populatePosts(posts: Post[]) {
@@ -42,6 +43,5 @@ export class PostsService {
       await post.populate('comments');
       await this.populatePosts(post.comments);
     }
-    return posts;
   }
 }
