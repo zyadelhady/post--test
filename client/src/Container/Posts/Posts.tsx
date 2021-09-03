@@ -17,7 +17,7 @@ export const Posts: FC<PostsProps> = (props) => {
   return (
     <div>
       {posts.map((p: IPost) => {
-        return <Post key={p._id} value={p.value}></Post>;
+        return <Post key={p._id} value={p.value} comments={p.comments} />;
       })}
     </div>
   );

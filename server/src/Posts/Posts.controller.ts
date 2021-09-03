@@ -8,11 +8,17 @@ export class PostsController {
 
   @Post()
   @Header('content-type', 'text/json')
-  addPost(
+  addPost(@Body('value') value: number) {
+    return this.Postservice.addPost(value);
+  }
+
+  @Post('/comment')
+  @Header('content-type', 'text/json')
+  addComment(
     @Body('value') value: number,
     @Body('parentId') parentId: Types.ObjectId,
   ) {
-    return this.Postservice.addPost(value, parentId);
+    return this.Postservice.AddComment(value, parentId);
   }
 
   @Get()

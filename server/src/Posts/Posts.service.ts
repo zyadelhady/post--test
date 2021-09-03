@@ -7,36 +7,41 @@ import { Post } from './Post.model';
 export class PostsService {
   constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
 
-  async addPost(value: number, parentId: Types.ObjectId) {
-    console.log('parent ID ' + parentId);
-    const postId = new Types.ObjectId();
-    const newPost = new this.postModel({ _id: postId, value });
-    if (parentId != null) {
-      newPost.parentId = parentId;
-    } else {
-      newPost.parentId = null;
-    }
+  async addPost(value: number) {
+    const newPost = new this.postModel({ value, isComment: false });
     const result = await newPost.save();
     return result;
   }
 
-  async getPosts() {
-    const posts = await this.postModel.find({ parentId: null });
-    for (let i = 0; i < posts.length; i++) {
-      let post = await this.populatePost(posts[i]);
-      while (post.comment != null) {
-        post = await this.populatePost(post.comment);
-        console.log(post);
-      }
-    }
-    return posts;
+  async AddComment(value: number, parentId: Types.ObjectId) {
+    const _id = new Types.ObjectId();
+    const newComment = new this.postModel({ _id, value });
+    await this.postModel.bulkWrite([
+      {
+        insertOne: {
+          document: newComment,
+        },
+      },
+      {
+        updateOne: {
+          filter: { _id: parentId },
+          update: { $push: { comments: _id } },
+        },
+      },
+    ]);
+    return newComment;
   }
 
-  async populatePost(post: Post) {
-    const comment: Post = await this.postModel.findOne({
-      parentId: post._id,
-    });
-    post.comment = comment;
-    return post;
+  async getPosts() {
+    const posts = await this.postModel.find({ isComment: false });
+    return this.populatePosts(posts);
+  }
+
+  async populatePosts(posts: Post[]) {
+    for (const post of posts) {
+      await post.populate('comments');
+      await this.populatePosts(post.comments);
+    }
+    return posts;
   }
 }

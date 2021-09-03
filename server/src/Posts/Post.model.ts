@@ -1,14 +1,13 @@
-import { Schema, Types } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 
 export const postSchema = new Schema({
   value: { type: Number, required: true },
-  parentId: { type: Schema.Types.ObjectId, ref: 'Post', default: 'null' },
-  comment: { type: Object, default: 'null' },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+  isComment: { type: Boolean, default: true },
 });
 
-export interface Post {
-  _id: Types.ObjectId;
+export interface Post extends Document {
   value: number;
-  parentId: Types.ObjectId;
-  comment: Post;
+  isComment: boolean;
+  comments: Post[];
 }

@@ -15,6 +15,7 @@ interface ResponseGenerator {
 export function* getPostsSaga(action: Action) {
   try {
     const response: ResponseGenerator = yield axios.get(`posts/`);
+    console.log(response.data);
     yield put(actionTypes.getPostsDone(response.data));
   } catch (e) {
     console.log(e);
