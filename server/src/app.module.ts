@@ -7,15 +7,13 @@ import { PostsModule } from './Posts/Post.module';
 
 @Module({
   imports: [
-    PostsModule,
     ConfigModule.forRoot(),
+    PostsModule,
     MongooseModule.forRoot(
-      `mongodb+srv://zyad:axQ85nrkPvtpemgo@cluster0.1kr59.mongodb.net/Posts?retryWrites=true&w=majority`,
+      `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.1kr59.mongodb.net/Posts?retryWrites=true&w=majority`,
     ),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
-// `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.1kr59.mongodb.net/Posts?retryWrites=true&w=majority`,
