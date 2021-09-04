@@ -15,10 +15,10 @@ export const getPostsStart = () => {
   };
 };
 
-export type SendReplyType = {
+export interface SendReplyType {
   newComment: { value: string; op: string; parentId: string };
   comments: IPost[];
-};
+}
 
 export const sendPostStart = (data: string) => {
   return {
