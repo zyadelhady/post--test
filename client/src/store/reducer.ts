@@ -2,8 +2,12 @@ import { IPost } from './IPost';
 import { IAction } from './Actions/actions';
 import { ActionType } from './Actions/actions-type';
 
-let initialState = {
-  posts: [] as IPost[],
+interface State {
+  posts: IPost[];
+}
+
+let initialState: State = {
+  posts: [],
 };
 
 const reducer = (state = initialState, action: IAction<any>) => {
@@ -25,5 +29,7 @@ const reducer = (state = initialState, action: IAction<any>) => {
       return state;
   }
 };
+
+export type RootState = ReturnType<typeof reducer>;
 
 export default reducer;

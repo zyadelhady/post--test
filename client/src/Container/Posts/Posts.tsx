@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../Components/Post/Post';
 import { getPostsStart } from '../../store/Actions/actions-type';
 import { IPost } from '../../store/IPost';
+import { RootState } from '../../store/reducer';
 
 export interface PostsProps {}
 
 export const Posts: FC<PostsProps> = (props) => {
   const dispatch = useDispatch();
-  const posts = useSelector((state: any) => state.posts.posts);
+  const posts = useSelector((state: RootState) => state.posts);
 
   useEffect(() => {
     dispatch(getPostsStart());

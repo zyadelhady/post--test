@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { sendReplyStart } from '../../store/Actions/actions-type';
+import { IPost } from '../../store/IPost';
 import './Post.css';
 export interface PostProps {
   value: number;
-  comments: any[];
+  comments: IPost[];
   id: string;
 }
 
@@ -41,7 +42,7 @@ export const Post: FC<PostProps> = (props) => {
         </select>
         <button>reply</button>
       </form>
-      {props.comments.map((c: any) => {
+      {props.comments.map((c) => {
         return <Post key={c._id} value={c.value} comments={c.comments} id={c._id} />;
       })}
     </div>

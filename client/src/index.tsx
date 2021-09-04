@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { applyMiddleware, compose, createStore } from 'redux';
-import postreducer from './store';
+import postsreducer from './store/reducer';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { watchPosts } from './store/sagas/Posts';
@@ -20,7 +20,7 @@ const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers =
   (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
 
-const store = createStore(postreducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+const store = createStore(postsreducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(watchPosts);
 
