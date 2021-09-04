@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { sendPostStart } from '../../store/Actions/actions-type';
 import { Input } from '../Input/Input';
@@ -12,7 +12,10 @@ export const AddPost: FC<AddPostProps> = (props) => {
   const dispatch = useDispatch();
 
   const sendPost = () => {
-    dispatch(sendPostStart(textInput.current?.value));
+    dispatch(sendPostStart(textInput.current?.value as string));
+    if (textInput.current?.value) {
+      textInput.current.value = '';
+    }
   };
 
   return (

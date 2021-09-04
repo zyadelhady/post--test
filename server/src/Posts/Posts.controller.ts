@@ -15,10 +15,11 @@ export class PostsController {
   @Post('/comment')
   @Header('content-type', 'text/json')
   addComment(
-    @Body('value') value: number,
+    @Body('value') value: string,
     @Body('parentId') parentId: Types.ObjectId,
+    @Body('op') op: string,
   ) {
-    return this.Postservice.AddComment(value, parentId);
+    return this.Postservice.AddComment(value, parentId, op);
   }
 
   @Get()

@@ -1,6 +1,5 @@
 export interface IPost {
-  _id: number;
+  _id: string;
   value: number;
-  parents: [any];
-  comments: any[];
+  comments: IPost[];
 }

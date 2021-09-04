@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Post } from './Post.model';
@@ -13,9 +13,36 @@ export class PostsService {
     return result;
   }
 
-  async AddComment(value: number, parentId: Types.ObjectId) {
+  async AddComment(value: string, parentId: Types.ObjectId, op: string) {
+    const parentValue = (await this.postModel.findById(parentId)).value;
+    if (!parentValue) {
+      throw new HttpException('no parent with this id', HttpStatus.NOT_FOUND);
+    }
+    let newValue = 0;
+    const parseValue = parseInt(value);
+
+    console.log(op);
+
+    switch (op) {
+      case '+':
+        newValue = parentValue + parseValue;
+        break;
+      case '-':
+        newValue = parentValue - parseValue;
+        break;
+      case '*':
+        newValue = parentValue * parseValue;
+        break;
+      case '/':
+        if (parseValue === 0)
+          throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        newValue = parentValue / parseValue;
+        break;
+      default:
+        throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
     const _id = new Types.ObjectId();
-    const newComment = new this.postModel({ _id, value });
+    const newComment = new this.postModel({ _id, value: newValue });
     await this.postModel.bulkWrite([
       {
         insertOne: {
