@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../Components/Post/Post';
 import { getPostsStart } from '../../store/Actions/actions-type';
-import { IPost } from '../../store/Post';
+import { IPost } from '../../store/IPost';
 
 export interface PostsProps {}
 

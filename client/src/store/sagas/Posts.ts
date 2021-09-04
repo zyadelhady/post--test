@@ -3,8 +3,8 @@ import { AxiosResponse } from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from '../Actions/actions-type';
 import { IAction } from '../Actions/actions';
-import { IPost } from '../Post';
-import { SendReplyType } from '../Actions/actions-type';
+import { IPost } from '../IPost';
+import { ISendReplyType } from '../Actions/actions-type';
 
 export function* getPostsSaga(action: IAction<IPost[]>) {
   try {
@@ -24,7 +24,7 @@ export function* sendPostSaga(action: IAction<IPost[]>) {
   }
 }
 
-export function* sendReplySaga(action: IAction<SendReplyType>) {
+export function* sendReplySaga(action: IAction<ISendReplyType>) {
   try {
     const reply: AxiosResponse<IPost> = yield axios.post('posts/comment/', {
       value: action.data.newComment.value,

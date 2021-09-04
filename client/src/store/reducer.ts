@@ -1,4 +1,4 @@
-import { IPost } from './Post';
+import { IPost } from './IPost';
 import { IAction } from './Actions/actions';
 import { ActionType } from './Actions/actions-type';
 

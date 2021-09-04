@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Post } from './Post.model';
+import { IPost } from './Post.model';
 
 @Injectable()
 export class PostsService {
-  constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
+  constructor(@InjectModel('Post') private readonly postModel: Model<IPost>) {}
 
   async addPost(value: number) {
     const newPost = new this.postModel({ value, isComment: false });
@@ -65,7 +65,7 @@ export class PostsService {
     return posts;
   }
 
-  async populatePosts(posts: Post[]) {
+  async populatePosts(posts: IPost[]) {
     for (const post of posts) {
       await post.populate('comments');
       await this.populatePosts(post.comments);

@@ -6,8 +6,8 @@ export const postSchema = new Schema({
   isComment: { type: Boolean, default: true },
 });
 
-export interface Post extends Document {
+export interface IPost extends Document {
   value: number;
   isComment: boolean;
-  comments: Post[];
+  comments: IPost[];
 }

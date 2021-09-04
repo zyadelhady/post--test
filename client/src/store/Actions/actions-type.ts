@@ -1,4 +1,4 @@
-import { IPost } from '../Post';
+import { IPost } from '../IPost';
 
 export enum ActionType {
   GETPOSTSDONE = 'GETPOSTSDONE',
@@ -15,7 +15,7 @@ export const getPostsStart = () => {
   };
 };
 
-export interface SendReplyType {
+export interface ISendReplyType {
   newComment: { value: string; op: string; parentId: string };
   comments: IPost[];
 }
@@ -41,7 +41,7 @@ export const getPostsDone = (data: IPost[]) => {
   };
 };
 
-export const sendReplyStart = (data: SendReplyType) => {
+export const sendReplyStart = (data: ISendReplyType) => {
   return {
     type: ActionType.SENDREPLYSTART,
     data,
